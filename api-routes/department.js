@@ -17,3 +17,5 @@ router.get('/departments', (req, res) => {
         })
     })
 })
+
+// delete all the api routes, not needed

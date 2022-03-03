@@ -1,5 +1,6 @@
 const inquirer = require("inquirer");
 const insertDepartment = require("./app-choices/add-department");
+const insertEmployee = require("./app-choices/add-employee");
 const insertRole = require("./app-choices/add-role");
 const viewTables = require("./app-choices/view-tables");
 
@@ -98,7 +99,7 @@ function addEmployeeQuestion () {
         },
         {
             type: "input",
-            name: 'empLNAME',
+            name: 'empLName',
             message: "What is the last name of the new employee?",
             validate: validate
         },
@@ -116,11 +117,19 @@ function addEmployeeQuestion () {
         },
         {
             type: 'input',
+            name: 'empID',
+            message: 'Enter an ID for the new employee',
+            validate: validate
+        },
+        {
+            type: 'input',
             name: 'empManager',
             message: "Who is the manager for this employee? Enter an ID!",
             validate: validate
         }
-    ])
+    ]).then((employee) => {
+        insertEmployee(employee)
+    })
 }
 
 function validate(input) {

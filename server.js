@@ -16,3 +16,5 @@ db.connect((err) => {
         console.log(`Running on port ${PORT}`)
     })
 })
+
+// may not need server.js at all
