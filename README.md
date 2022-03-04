@@ -23,7 +23,7 @@
       npm install
 ### After the repository is cloned, open the command line in the repository's root directory to install the required dependencies denoted in the package.json file.
     node app.js
-### With the command line open in the root directory, enter this command to initialize the application.
+### With the command line open in the root directory, enter this command to initialize the application. Note that the application has been pre-populated with database data to aid in testing
     ctrl+C
 ### Enter this command at any time to quit the application.
 
