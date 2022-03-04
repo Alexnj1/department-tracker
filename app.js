@@ -1,6 +1,8 @@
 const inquirer = require("inquirer");
+const { message } = require("statuses");
 const insertDepartment = require("./app-choices/add-department");
 const insertEmployee = require("./app-choices/add-employee");
+const updateEmployee = require('./app-choices/update-employee')
 const insertRole = require("./app-choices/add-role");
 const viewTables = require("./app-choices/view-tables");
 
@@ -18,7 +20,7 @@ function initialQuestions() {
           "Add a department",
           "Add a role",
           "Add an employee",
-          "Update and employee role",
+          "Update an employee role",
         ],
       },
     ])
@@ -31,12 +33,14 @@ function initialQuestions() {
         addRoleQuestion();
       } else if (choice.chooseAction === "Add an employee") {
         addEmployeeQuestion()
+      } else if (choice.chooseAction === "Update an employee role") {
+        updateEmployeeQuestion()
       } else if (
         choice.chooseAction === "View all departments" ||
         "View all roles" ||
         "View all employees"
       ) {
-        return viewTables(choice);
+        viewTables(choice);
       }
     });
   // .then(() => {
@@ -130,6 +134,28 @@ function addEmployeeQuestion () {
     ]).then((employee) => {
         insertEmployee(employee)
     })
+}
+
+function updateEmployeeQuestion () {
+  return inquirer.prompt([
+    {
+      type: 'input',
+      name: 'updateId',
+      message: 'What is the ID of the employee you wish to update?'
+    },
+    {
+      type: 'input',
+      name: 'newRole',
+      message: 'What is the new role of this employee?'
+    },
+    {
+      type: 'input',
+      name: 'newPosition',
+      message: 'What is the new job title of this employee?'
+    }
+  ]).then((newEmp) => {
+    updateEmployee(newEmp)
+  })
 }
 
 function validate(input) {
