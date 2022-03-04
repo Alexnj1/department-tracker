@@ -1,29 +1,32 @@
 const db = require("../db/connection");
+const cTable = require("console.table");
 
 function insertRole(role) {
   const sql = `INSERT INTO roles (name, department_name, salary)
                 VALUES (?,?,?)`;
-  const sqlView = `SELECT * FROM roles`;
+  const sqlView = `SELECT * FROM roles ORDER BY id`;
   const params = [role.roleName, role.roleDept, parseInt(role.roleSalary)];
-  console.log(params)
+  console.log(params);
 
   db.query(sql, params, (err, result) => {
     if (err) {
-      response = {
-        message: "There was a server error, 500",
-      };
+      console.log({
+        status: "There was an error with your data. (404)",
+      });
+      return;
     }
-    // console.table("Updated Departments" + response.data || response.message);
     console.log({
-      message: "Success",
+      status: "Success",
     });
   });
 
   db.query(sqlView, (err, rows) => {
     if (err) {
       response = {
-        message: "There was a server error, 500",
+        status:
+          "There was an error when trying to view updated Roles Table, 500",
       };
+      return;
     }
     response = {
       Title: "Roles Table",

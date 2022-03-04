@@ -1,37 +1,39 @@
 const db = require("../db/connection");
+const cTable = require("console.table");
 
 function insertEmployee(employee) {
   const sql = `INSERT INTO employees (id, first_name, last_name, job_title, role_name, manager_id)
                 VALUES (?,?,?,?,?,?)`;
   const sqlView = `SELECT employees.*, roles.salary
                     FROM employees
-                    LEFT JOIN roles on employees.role_name = roles.name`;
+                    LEFT JOIN roles on employees.role_name = roles.name ORDER BY id`;
   const params = [
-    employee.empID,
+    parseInt(employee.empID),
     employee.empFName,
     employee.empLName,
     employee.empJobTitle,
     employee.empRoleName,
-    employee.empManager,
+    parseInt(employee.empManager),
   ];
   console.log(params);
 
   db.query(sql, params, (err, result) => {
-    if (err) throw err // change them all to this
-    //   response = {
-    //     message: "There was a server error, 500",
-    //   };
-    // }
-    // console.table("Updated Departments" + response.data || response.message);
+    if (err) {
+      console.log({
+        status: "There was an error with your data. (404)",
+      });
+      return;
+    }
     console.log({
-      message: "Success",
+      status: "Success",
     });
   });
 
   db.query(sqlView, (err, rows) => {
     if (err) {
       response = {
-        message: "There was a server error, 500",
+        status:
+          "There was an error when trying to view updated Employees Table, 500",
       };
     }
     response = {
